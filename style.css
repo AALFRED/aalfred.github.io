@@ -1,0 +1,260 @@
+ :root {
+    --primary: #1a1a2e;
+    --secondary: #4a90e2;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --text-light: #e9ecef;
+    --bg-dark: #16213e;
+  }
+ body {
+    font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: italic;
+    margin: 0;
+    padding: 20px;
+    background: #0f3460;
+    color: var(--text-light);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .header {
+    background: var(--primary);
+    color: var(--text-light);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .logo-container {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header-text {
+    flex-grow: 1;
+  }
+
+  .header-text h1 {
+    margin: 0;
+    color: var(--text-light);
+  }
+
+  .form-container {
+    background: var(--bg-dark);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-light);
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #2c3e50;
+    color: var(--text-light);
+  }
+
+  button {
+    background: var(--secondary);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background: #357abd;
+  }
+
+  .records {
+    margin-top: 20px;
+    background: var(--bg-dark);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.85em;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #2c3e50;
+  }
+
+  th {
+    background: var(--primary);
+    color: var(--text-light);
+  }
+
+  td {
+    color: var(--text-light);
+  }
+
+  .status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+  }
+
+  .pending {
+    background: var(--warning);
+    color: white;
+  }
+
+  .completed {
+    background: var(--success);
+    color: white;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .new-record {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+
+  .form-row .form-group {
+    flex: 1 1 250px;
+  }
+
+  h2 {
+    color: var(--text-light);
+  }
+
+  .language-switch {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  .language-switch button {
+    padding: 5px 10px;
+    margin-left: 5px;
+  }
+
+  button + button {
+    margin-left: 5px;
+  }
+
+  .form-container button[type="button"] {
+    background: var(--danger);
+  }
+
+  .form-container button[type="button"]:hover {
+    background: #c0392b;
+  }
+
+  .records td button {
+    font-size: 0.85em;
+    padding: 6px 12px;
+  }
+
+  .filters {
+    margin-bottom: 20px;
+  }
+
+  .filter-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    background: #2c3e50;
+    color: var(--text-light);
+  }
+
+  .filter-input::placeholder {
+    color: #a0aec0;
+  }
+
+  @media screen and (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    
+    .header {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .logo-container {
+      margin: 0 auto;
+    }
+    
+    .header-text h1 {
+      font-size: 1.5em;
+    }
+    
+    .form-container, .records {
+      padding: 15px;
+    }
+    
+    table {
+      font-size: 0.8em;
+    }
+    
+    th, td {
+      padding: 8px;
+    }
+    
+    .records td button {
+      font-size: 0.8em;
+      padding: 5px 10px;
+    }
+
+    button {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    
+    td button {
+      padding: 8px;
+      font-size: 0.9em;
+    }
+}
