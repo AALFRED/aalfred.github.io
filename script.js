@@ -107,7 +107,7 @@ const translations = {
       "Cambio de Luminaria",
       "Limpieza de Alfombra",
       "Ajustes en Grifería",
-      "Corrección de Puertas"
+      "Corrección de Puertas",
 	  "Cortina Blanca",
 	  "Cortina Opaca"
     ],
