@@ -1,1 +1,131 @@
+<html><head><base href="." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
+<title>Hotel Maintenance System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="language-switch">
+    <button onclick="changeLanguage('es')">Español</button>
+    <button onclick="changeLanguage('en')">English</button>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="28" fill="#4a90e2" stroke="#fff" stroke-width="2"/>
+          <path d="M15 30 H45 M30 15 V45" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+          <path d="M20 20 L40 40 M20 40 L40 20" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="30" cy="30" r="10" fill="none" stroke="#fff" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1 data-lang="title">Hotel Maintenance System</h1>
+        <p data-lang="subtitle">Room maintenance registration and tracking</p>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <h2 data-lang="newRecord">New Maintenance Record</h2>
+      <form id="maintenanceForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="roomNumber" data-lang="roomNumber">Room Number</label>
+            <input type="number" id="roomNumber" required min="1" value="1">
+          </div>
+          <div class="form-group">
+            <label for="scheduledDate" data-lang="scheduledDate">Scheduled Date</label>
+            <input type="datetime-local" id="scheduledDate" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="commonArea" data-lang="commonAreas">Common Areas</label>
+            <select id="commonArea">
+              <option value="">Select area</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="issueType" data-lang="maintenanceType">Maintenance Type</label>
+          <select id="issueType" required>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="description" data-lang="description">Problem Description</label>
+          <textarea id="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="priority" data-lang="priority">Priority</label>
+          <select id="priority" required>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="workDate" data-lang="workDate">Work Registration Date</label>
+          <input type="datetime-local" id="workDate">
+        </div>
+
+        <button type="submit" data-lang="register">Register Maintenance</button>
+      </form>
+    </div>
+
+    <div class="records">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 data-lang="maintenanceRecords">Maintenance Records</h2>
+        <button onclick="exportToPDF()" style="background: var(--success);" data-lang="exportPDF">Export to PDF</button>
+      </div>
+      <div class="filters">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="filterRoom" placeholder="Filter by room" class="filter-input">
+          </div>
+          <div class="form-group">
+            <select id="filterType" class="filter-input">
+              <option value="">All types</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="filterPriority" class="filter-input">
+              <option value="">All priorities</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="filterStatus" class="filter-input">
+              <option value="">All statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <table id="maintenanceTable">
+        <thead>
+          <tr>
+            <th data-lang="room">Room</th>
+            <th data-lang="type">Type</th>
+            <th data-lang="description">Description</th>
+            <th data-lang="priority">Priority</th>
+            <th data-lang="scheduledDate">Scheduled Date</th>
+            <th data-lang="workDate">Work Date</th>
+            <th data-lang="status">Status</th>
+            <th data-lang="actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="maintenanceRecords">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+ <script src="script.js"></script>
+
+</body></html>
