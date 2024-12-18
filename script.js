@@ -41,9 +41,9 @@ const translations = {
       "Carpet Cleaning", 
       "Faucet Adjustments",
       "Door Correction",
-	  "Shade",
-	  "BlackOut",
-	  "Others"
+      "Shade",
+      "BlackOut",
+      "Others"
     ],
     priorities: ["Low", "Medium", "High", "Urgent"],
     commonAreaTypes: [
@@ -56,13 +56,13 @@ const translations = {
       "Meeting Rooms",
       "Elevators",
       "Hallways",
-      "Reception"
-	  "Public Bathroom Women",
-	  "Public Bathroom Men",
-	  "Gym Man Bathroom",
-	  "Gym Woman Bathroom",
-	  "BreakRoom",
-	  "Exterior Walkways"
+      "Reception",
+      "Public Bathroom Women",
+      "Public Bathroom Men",
+      "Gym Man Bathroom",
+      "Gym Woman Bathroom",
+      "BreakRoom",
+      "Exterior Walkways"
     ],
     exportPDF: "Export to PDF",
     exportTitle: "Maintenance Records Report",
@@ -108,8 +108,8 @@ const translations = {
       "Limpieza de Alfombra",
       "Ajustes en Grifería",
       "Corrección de Puertas",
-	  "Cortina Blanca",
-	  "Cortina Opaca"
+      "Cortina Blanca",
+      "Cortina Opaca"
     ],
     priorities: ["Baja", "Media", "Alta", "Urgente"],
     commonAreaTypes: [
@@ -123,12 +123,12 @@ const translations = {
       "Ascensores",
       "Pasillos",
       "Recepción",
-	  "Bano Publico Mujeres",
-	  "Bano Publico Hombres",
-	  "Bano Gym Hombres",
-	  "Bano Gym Mujeres",
-	  "Sala de Descanso",
-	  "Pasillos Exteriores"
+      "Bano Publico Mujeres",
+      "Bano Publico Hombres",
+      "Bano Gym Hombres",
+      "Bano Gym Mujeres",
+      "Sala de Descanso",
+      "Pasillos Exteriores"
     ],
     exportPDF: "Exportar a PDF",
     exportTitle: "Reporte de Registros de Mantenimiento",
