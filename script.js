@@ -31,24 +31,25 @@ const translations = {
     update: "Update",
     maintenanceTypes: [
       "General Cleaning",
+	  "PM Complete",
       "Plumbing", 
       "Electrical System",
       "Furniture",
-      "Air Conditioning",
+      "A/C Unit",
       "Touch Up",
       "Painting",
       "Lighting Change",
       "Carpet Cleaning", 
       "Faucet Adjustments",
       "Door Correction",
-      "Shade",
-      "BlackOut",
-      "Others"
+	  "Shade",
+	  "BlackOut",
+	  "Others"
     ],
     priorities: ["Low", "Medium", "High", "Urgent"],
     commonAreaTypes: [
       "Lobby",
-      "Swimming Pool",
+      "Pool & SPA Area",
       "Restaurant",
       "Gym",
       "Parking Lot",
@@ -57,16 +58,17 @@ const translations = {
       "Elevators",
       "Hallways",
       "Reception",
-      "Public Bathroom Women",
-      "Public Bathroom Men",
-      "Gym Man Bathroom",
-      "Gym Woman Bathroom",
-      "BreakRoom",
-      "Exterior Walkways"
+	  "BreakRoom",
+	  "Public Bathroom Women",
+	  "Public Bathroom Men",
+	  "Gym Man Bathroom",
+	  "Gym Woman Bathroom",
+	  "Exterior Walkways"
     ],
     exportPDF: "Export to PDF",
     exportTitle: "Maintenance Records Report",
-    generatedOn: "Generated on"
+    generatedOn: "Generated on",
+	clearRecords: "Clear Records"
   },
   es: {
     title: "Sistema de Mantenimiento Hotelero",
@@ -98,6 +100,7 @@ const translations = {
     update: "Actualizar",
     maintenanceTypes: [
       "Limpieza General",
+	  "PM Completo",
       "Plomería",
       "Sistema Eléctrico", 
       "Mobiliario",
@@ -108,13 +111,13 @@ const translations = {
       "Limpieza de Alfombra",
       "Ajustes en Grifería",
       "Corrección de Puertas",
-      "Cortina Blanca",
-      "Cortina Opaca"
+	  "Cortina Blanca",
+	  "Cortina Opaca"
     ],
     priorities: ["Baja", "Media", "Alta", "Urgente"],
     commonAreaTypes: [
       "Lobby",
-      "Piscina",
+      "Area Piscina & SPA",
       "Restaurante", 
       "Gimnasio",
       "Estacionamiento",
@@ -123,16 +126,17 @@ const translations = {
       "Ascensores",
       "Pasillos",
       "Recepción",
-      "Bano Publico Mujeres",
-      "Bano Publico Hombres",
-      "Bano Gym Hombres",
-      "Bano Gym Mujeres",
-      "Sala de Descanso",
-      "Pasillos Exteriores"
+	  "Sala de Descanso",
+	  "Bano Publico Mujeres",
+	  "Bano Publico Hombres",
+	  "Bano Gym Hombres",
+	  "Bano Gym Mujeres",
+	  "Pasillos Exteriores"
     ],
     exportPDF: "Exportar a PDF",
     exportTitle: "Reporte de Registros de Mantenimiento",
-    generatedOn: "Generado el"
+    generatedOn: "Generado el",
+	clearRecords: "Limpiar Registros"
   }
 };
 

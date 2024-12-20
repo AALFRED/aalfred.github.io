@@ -1,4 +1,4 @@
-<html><head><base href="." />
+<html><head><base href=".">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Hotel Maintenance System</title>
@@ -270,8 +270,8 @@
 </head>
 <body>
   <div class="language-switch">
-    <button onclick="changeLanguage('es')">Español</button>
-    <button onclick="changeLanguage('en')">English</button>
+    <button onclick="changeLanguage(&apos;es&apos;)">Espa&#xf1;ol</button>
+    <button onclick="changeLanguage(&apos;en&apos;)">English</button>
   </div>
 
   <div class="container">
@@ -307,7 +307,7 @@
           <div class="form-group">
             <label for="commonArea" data-lang="commonAreas">Common Areas</label>
             <select id="commonArea">
-              <option value="">Select area</option>
+              <option value>Select area</option>
             </select>
           </div>
         </div>
@@ -341,7 +341,10 @@
     <div class="records">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2 data-lang="maintenanceRecords">Maintenance Records</h2>
-        <button onclick="exportToPDF()" style="background: var(--success);" data-lang="exportPDF">Export to PDF</button>
+        <div>
+          <button onclick="clearAllRecords()" style="background: var(--danger); margin-right: 10px;" data-lang="clearRecords">Clear Records</button>
+          <button onclick="exportToPDF()" style="background: var(--success);" data-lang="exportPDF">Export to PDF</button>
+        </div>
       </div>
       <div class="filters">
         <div class="form-row">
@@ -350,17 +353,17 @@
           </div>
           <div class="form-group">
             <select id="filterType" class="filter-input">
-              <option value="">All types</option>
+              <option value>All types</option>
             </select>
           </div>
           <div class="form-group">
             <select id="filterPriority" class="filter-input">
-              <option value="">All priorities</option>
+              <option value>All priorities</option>
             </select>
           </div>
           <div class="form-group">
             <select id="filterStatus" class="filter-input">
-              <option value="">All statuses</option>
+              <option value>All statuses</option>
               <option value="Pending">Pending</option>
               <option value="Completed">Completed</option>
             </select>
@@ -386,9 +389,7 @@
     </div>
   </div>
 
-<script>
-let currentLanguage = 'en';
-
+<script>let currentLanguage = 'en';
 const translations = {
   en: {
     title: "Hotel Maintenance System",
@@ -418,35 +419,13 @@ const translations = {
     editRecord: "Edit Maintenance Record",
     cancel: "Cancel",
     update: "Update",
-    maintenanceTypes: [
-      "General Cleaning",
-      "Plumbing", 
-      "Electrical System",
-      "Furniture",
-      "Air Conditioning",
-      "Touch Up",
-      "Painting",
-      "Lighting Change",
-      "Carpet Cleaning", 
-      "Faucet Adjustments",
-      "Door Correction"
-    ],
+    maintenanceTypes: ["General Cleaning",  "PM Complete", "Plumbing", "Electrical System", "Furniture", "A/C Unit", "Touch Up", "Painting", "Lighting Change", "Carpet Cleaning", "Faucet Adjustments", "Door Correction", "Shade", "BlackOut", "Others"],
     priorities: ["Low", "Medium", "High", "Urgent"],
-    commonAreaTypes: [
-      "Lobby",
-      "Swimming Pool",
-      "Restaurant",
-      "Gym",
-      "Parking Lot",
-      "Gardens",
-      "Meeting Rooms",
-      "Elevators",
-      "Corridors",
-      "Reception"
-    ],
+    commonAreaTypes: ["Lobby", "Pool & SPA Area", "Restaurant", "Gym", "Parking Lot", "Gardens", "Meeting Rooms", "Elevators", "Corridors", "Reception", "BrakeRoom", "Public Bathroom Women", "Public Bathroom Men", "Gym Man Bathroom", "Gym Woman Bathroom", "Exterior Walkways"],
     exportPDF: "Export to PDF",
     exportTitle: "Maintenance Records Report",
-    generatedOn: "Generated on"
+    generatedOn: "Generated on",
+    clearRecords: "Clear Records"
   },
   es: {
     title: "Sistema de Mantenimiento Hotelero",
@@ -476,215 +455,149 @@ const translations = {
     editRecord: "Editar Registro de Mantenimiento",
     cancel: "Cancelar",
     update: "Actualizar",
-    maintenanceTypes: [
-      "Limpieza General",
-      "Plomería",
-      "Sistema Eléctrico", 
-      "Mobiliario",
-      "Aire Acondicionado",
-      "Touch Up",
-      "Pintura",
-      "Cambio de Luminaria",
-      "Limpieza de Alfombra",
-      "Ajustes en Grifería",
-      "Corrección de Puertas"
-    ],
+    maintenanceTypes: ["Limpieza General", "PM Completo", "Plomería", "Sistema Eléctrico", "Mobiliario", "Aire Acondicionado", "Touch Up", "Pintura", "Cambio de Luminaria", "Limpieza de Alfombra", "Ajustes en Grifería", "Corrección de Puertas", "Cortina Blanca", "Cortina Opaca"],
     priorities: ["Baja", "Media", "Alta", "Urgente"],
-    commonAreaTypes: [
-      "Lobby",
-      "Piscina",
-      "Restaurante", 
-      "Gimnasio",
-      "Estacionamiento",
-      "Jardines",
-      "Salas de Reuniones",
-      "Ascensores",
-      "Pasillos",
-      "Recepción"
-    ],
+    commonAreaTypes: ["Lobby", "Area Piscina & SPA", "Restaurante", "Gimnasio", "Estacionamiento", "Jardines", "Salas de Reuniones", "Ascensores", "Pasillos", "Recepción", "Sala de Descanso", "Bano Publico Mujeres", "Bano Publico Hombres", "Bano Gym Hombres", "Bano Gym Mujeres", "Pasillos Exteriores"],
     exportPDF: "Exportar a PDF",
     exportTitle: "Reporte de Registros de Mantenimiento",
-    generatedOn: "Generado el"
+    generatedOn: "Generado el",
+    clearRecords: "Limpiar Registros"
   }
 };
-
-// Database setup and operations
 const DB_NAME = 'maintenanceDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'maintenanceRecords';
-
-// Initialize database
 function initDB() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        
-        request.onerror = () => {
-            reject('Error opening database');
-        };
-        
-        request.onsuccess = (event) => {
-            resolve(event.target.result);
-        };
-        
-        request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                const store = db.createObjectStore(STORE_NAME, { 
-                    keyPath: 'id', 
-                    autoIncrement: true 
-                });
-                store.createIndex('roomNumber', 'roomNumber');
-                store.createIndex('status', 'status');
-                store.createIndex('issueType', 'issueType');
-                store.createIndex('priority', 'priority');
-            }
-        };
-    });
-}
-
-function populateSelects() {
-    const currentLang = currentLanguage || 'en';
-    
-    // Populate maintenance types
-    const issueTypeSelect = document.getElementById('issueType');
-    issueTypeSelect.innerHTML = '<option value="">Select type</option>';
-    translations[currentLang].maintenanceTypes.forEach(type => {
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = type;
-        issueTypeSelect.appendChild(option);
-    });
-
-    // Populate priorities
-    const prioritySelect = document.getElementById('priority');
-    prioritySelect.innerHTML = '<option value="">Select priority</option>';
-    translations[currentLang].priorities.forEach(priority => {
-        const option = document.createElement('option');
-        option.value = priority;
-        option.textContent = priority;
-        prioritySelect.appendChild(option);
-    });
-
-    // Populate common areas
-    const commonAreaSelect = document.getElementById('commonArea');
-    commonAreaSelect.innerHTML = '<option value="">Select area</option>';
-    translations[currentLang].commonAreaTypes.forEach(area => {
-        const option = document.createElement('option');
-        option.value = area;
-        option.textContent = area;
-        commonAreaSelect.appendChild(option);
-    });
-}
-
-function populateFilterSelects() {
-    const currentLang = currentLanguage || 'en';
-    
-    // Populate type filter
-    const filterType = document.getElementById('filterType');
-    filterType.innerHTML = '<option value="">All types</option>';
-    translations[currentLang].maintenanceTypes.forEach(type => {
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = type;
-        filterType.appendChild(option);
-    });
-
-    // Populate priority filter
-    const filterPriority = document.getElementById('filterPriority');
-    filterPriority.innerHTML = '<option value="">All priorities</option>';
-    translations[currentLang].priorities.forEach(priority => {
-        const option = document.createElement('option');
-        option.value = priority;
-        option.textContent = priority;
-        filterPriority.appendChild(option);
-    });
-}
-
-// Save record to database
-async function saveRecord(record) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.add(record);
-        
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-// Get all records from database
-async function getAllRecords() {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([STORE_NAME], 'readonly');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.getAll();
-        
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-// Update record in database
-async function updateRecord(id, record) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.put({...record, id});
-        
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-// Delete record from database
-async function deleteRecordFromDB(id) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.delete(id);
-        
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-// Modify the displayRecords function:
-async function displayRecords() {
-    const recordsTable = document.getElementById('maintenanceRecords');
-    const filterRoom = document.getElementById('filterRoom').value.toLowerCase();
-    const filterType = document.getElementById('filterType').value;
-    const filterPriority = document.getElementById('filterPriority').value;
-    const filterStatus = document.getElementById('filterStatus').value;
-    
-    recordsTable.innerHTML = '';
-    
-    try {
-        const maintenanceRecords = await getAllRecords();
-        
-        const filteredRecords = maintenanceRecords.filter(record => {
-            return (!filterRoom || record.roomNumber.toString().toLowerCase().includes(filterRoom) || 
-                    (record.commonArea && record.commonArea.toLowerCase().includes(filterRoom))) &&
-                   (!filterType || record.issueType === filterType) &&
-                   (!filterPriority || record.priority === filterPriority) &&
-                   (!filterStatus || record.status === filterStatus);
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onerror = () => {
+      reject('Error opening database');
+    };
+    request.onsuccess = event => {
+      resolve(event.target.result);
+    };
+    request.onupgradeneeded = event => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        const store = db.createObjectStore(STORE_NAME, {
+          keyPath: 'id',
+          autoIncrement: true
         });
-        
-        filteredRecords.forEach((record) => {
-            const row = document.createElement('tr');
-            row.className = 'new-record';
-            const status = record.status === 'Pending' ? 
-                translations[currentLanguage].pending : 
-                translations[currentLanguage].completed;
-            
-            const locationDisplay = record.commonArea ? 
-                `${record.commonArea}` :
-                `${translations[currentLanguage].room} ${record.roomNumber}`;
-            
-            row.innerHTML = `
+        store.createIndex('roomNumber', 'roomNumber');
+        store.createIndex('status', 'status');
+        store.createIndex('issueType', 'issueType');
+        store.createIndex('priority', 'priority');
+      }
+    };
+  });
+}
+function populateSelects() {
+  const currentLang = currentLanguage || 'en';
+  const issueTypeSelect = document.getElementById('issueType');
+  issueTypeSelect.innerHTML = '<option value="">Select type</option>';
+  translations[currentLang].maintenanceTypes.forEach(type => {
+    const option = document.createElement('option');
+    option.value = type;
+    option.textContent = type;
+    issueTypeSelect.appendChild(option);
+  });
+  const prioritySelect = document.getElementById('priority');
+  prioritySelect.innerHTML = '<option value="">Select priority</option>';
+  translations[currentLang].priorities.forEach(priority => {
+    const option = document.createElement('option');
+    option.value = priority;
+    option.textContent = priority;
+    prioritySelect.appendChild(option);
+  });
+  const commonAreaSelect = document.getElementById('commonArea');
+  commonAreaSelect.innerHTML = '<option value="">Select area</option>';
+  translations[currentLang].commonAreaTypes.forEach(area => {
+    const option = document.createElement('option');
+    option.value = area;
+    option.textContent = area;
+    commonAreaSelect.appendChild(option);
+  });
+}
+function populateFilterSelects() {
+  const currentLang = currentLanguage || 'en';
+  const filterType = document.getElementById('filterType');
+  filterType.innerHTML = '<option value="">All types</option>';
+  translations[currentLang].maintenanceTypes.forEach(type => {
+    const option = document.createElement('option');
+    option.value = type;
+    option.textContent = type;
+    filterType.appendChild(option);
+  });
+  const filterPriority = document.getElementById('filterPriority');
+  filterPriority.innerHTML = '<option value="">All priorities</option>';
+  translations[currentLang].priorities.forEach(priority => {
+    const option = document.createElement('option');
+    option.value = priority;
+    option.textContent = priority;
+    filterPriority.appendChild(option);
+  });
+}
+async function saveRecord(record) {
+  const db = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.add(record);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+async function getAllRecords() {
+  const db = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([STORE_NAME], 'readonly');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.getAll();
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+async function updateRecord(id, record) {
+  const db = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.put({
+      ...record,
+      id
+    });
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+async function deleteRecordFromDB(id) {
+  const db = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.delete(id);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+async function displayRecords() {
+  const recordsTable = document.getElementById('maintenanceRecords');
+  const filterRoom = document.getElementById('filterRoom').value.toLowerCase();
+  const filterType = document.getElementById('filterType').value;
+  const filterPriority = document.getElementById('filterPriority').value;
+  const filterStatus = document.getElementById('filterStatus').value;
+  recordsTable.innerHTML = '';
+  try {
+    const maintenanceRecords = await getAllRecords();
+    const filteredRecords = maintenanceRecords.filter(record => {
+      return (!filterRoom || record.roomNumber.toString().toLowerCase().includes(filterRoom) || record.commonArea && record.commonArea.toLowerCase().includes(filterRoom)) && (!filterType || record.issueType === filterType) && (!filterPriority || record.priority === filterPriority) && (!filterStatus || record.status === filterStatus);
+    });
+    filteredRecords.forEach(record => {
+      const row = document.createElement('tr');
+      row.className = 'new-record';
+      const status = record.status === 'Pending' ? translations[currentLanguage].pending : translations[currentLanguage].completed;
+      const locationDisplay = record.commonArea ? `${record.commonArea}` : `${translations[currentLanguage].room} ${record.roomNumber}`;
+      row.innerHTML = `
                 <td>${locationDisplay}</td>
                 <td>${record.issueType}</td>
                 <td>${record.description}</td>
@@ -704,158 +617,123 @@ async function displayRecords() {
                     </button>
                 </td>
             `;
-            recordsTable.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error displaying records:', error);
-    }
-}
-
-// Modify form submit handler:
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('maintenanceForm');
-    
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const newRecord = {
-            roomNumber: document.getElementById('roomNumber').value,
-            commonArea: document.getElementById('commonArea').value,
-            issueType: document.getElementById('issueType').value,
-            description: document.getElementById('description').value,
-            priority: document.getElementById('priority').value,
-            scheduledDate: document.getElementById('scheduledDate').value,
-            workDate: document.getElementById('workDate').value || null,
-            status: 'Pending'
-        };
-
-        try {
-            await saveRecord(newRecord);
-            await displayRecords();
-            form.reset();
-            document.getElementById('roomNumber').value = '1'; // Reset to default value
-        } catch (error) {
-            console.error('Error saving record:', error);
-        }
+      recordsTable.appendChild(row);
     });
-
-    // Initialize listeners and display
-    document.getElementById('filterRoom').addEventListener('input', displayRecords);
-    document.getElementById('filterType').addEventListener('change', displayRecords);
-    document.getElementById('filterPriority').addEventListener('change', displayRecords);
-    document.getElementById('filterStatus').addEventListener('change', displayRecords);
-    
-    populateSelects();
-    populateFilterSelects();
-    displayRecords();
-});
-
-// Add the changeLanguage function
-function changeLanguage(lang) {
-    currentLanguage = lang;
-    const elements = document.querySelectorAll('[data-lang]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-lang');
-        if (translations[lang][key]) {
-            element.textContent = translations[lang][key];
-        }
-    });
-    populateSelects();
-    populateFilterSelects();
-    displayRecords();
+  } catch (error) {
+    console.error('Error displaying records:', error);
+  }
 }
-
-// Modify deleteRecord function:
-async function deleteRecord(id) {
-    if (confirm(translations[currentLanguage].confirmDelete)) {
-        try {
-            await deleteRecordFromDB(id);
-            await displayRecords();
-        } catch (error) {
-            console.error('Error deleting record:', error);
-        }
-    }
-}
-
-// Modify toggleStatus function:
-async function toggleStatus(id) {
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('maintenanceForm');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const newRecord = {
+      roomNumber: document.getElementById('roomNumber').value,
+      commonArea: document.getElementById('commonArea').value,
+      issueType: document.getElementById('issueType').value,
+      description: document.getElementById('description').value,
+      priority: document.getElementById('priority').value,
+      scheduledDate: document.getElementById('scheduledDate').value,
+      workDate: document.getElementById('workDate').value || null,
+      status: 'Pending'
+    };
     try {
-        const records = await getAllRecords();
-        const record = records.find(r => r.id === id);
-        if (record) {
-            record.status = record.status === 'Pending' ? 'Completed' : 'Pending';
-            if (record.status === 'Completed' && !record.workDate) {
-                record.workDate = new Date().toISOString().slice(0, 16);
-            }
-            await updateRecord(id, record);
-            await displayRecords();
-        }
+      await saveRecord(newRecord);
+      await displayRecords();
+      form.reset();
+      document.getElementById('roomNumber').value = '1';
     } catch (error) {
-        console.error('Error toggling status:', error);
+      console.error('Error saving record:', error);
     }
+  });
+  document.getElementById('filterRoom').addEventListener('input', displayRecords);
+  document.getElementById('filterType').addEventListener('change', displayRecords);
+  document.getElementById('filterPriority').addEventListener('change', displayRecords);
+  document.getElementById('filterStatus').addEventListener('change', displayRecords);
+  populateSelects();
+  populateFilterSelects();
+  displayRecords();
+});
+function changeLanguage(lang) {
+  currentLanguage = lang;
+  const elements = document.querySelectorAll('[data-lang]');
+  elements.forEach(element => {
+    const key = element.getAttribute('data-lang');
+    if (translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
+  });
+  populateSelects();
+  populateFilterSelects();
+  displayRecords();
 }
-
-const maintenanceRecords = JSON.parse(localStorage.getItem('maintenanceRecords')) || [];
-
-// Updated exportToPDF function
-window.exportToPDF = async function() {
+async function deleteRecord(id) {
+  if (confirm(translations[currentLanguage].confirmDelete)) {
+    try {
+      await deleteRecordFromDB(id);
+      await displayRecords();
+    } catch (error) {
+      console.error('Error deleting record:', error);
+    }
+  }
+}
+async function toggleStatus(id) {
   try {
-    // Get records from IndexedDB
     const records = await getAllRecords();
-    
-    const { jsPDF } = window.jspdf;
+    const record = records.find(r => r.id === id);
+    if (record) {
+      record.status = record.status === 'Pending' ? 'Completed' : 'Pending';
+      if (record.status === 'Completed' && !record.workDate) {
+        record.workDate = new Date().toISOString().slice(0, 16);
+      }
+      await updateRecord(id, record);
+      await displayRecords();
+    }
+  } catch (error) {
+    console.error('Error toggling status:', error);
+  }
+}
+async function clearAllRecords() {
+  if (confirm(currentLanguage === 'es' ? '¿Está seguro que desea eliminar todos los registros?' : 'Are you sure you want to delete all records?')) {
+    try {
+      const db = await initDB();
+      const transaction = db.transaction([STORE_NAME], 'readwrite');
+      const store = transaction.objectStore(STORE_NAME);
+      await store.clear();
+      await displayRecords();
+    } catch (error) {
+      console.error('Error clearing records:', error);
+    }
+  }
+}
+const maintenanceRecords = JSON.parse(localStorage.getItem('maintenanceRecords')) || [];
+window.exportToPDF = async function () {
+  try {
+    const records = await getAllRecords();
+    const {
+      jsPDF
+    } = window.jspdf;
     const doc = new jsPDF();
-
     const filterRoom = document.getElementById('filterRoom').value.toLowerCase();
     const filterType = document.getElementById('filterType').value;
     const filterPriority = document.getElementById('filterPriority').value;
     const filterStatus = document.getElementById('filterStatus').value;
-    
     const filteredRecords = records.filter(record => {
-      return (!filterRoom || record.roomNumber.toString().toLowerCase().includes(filterRoom) || 
-              (record.commonArea && record.commonArea.toLowerCase().includes(filterRoom))) &&
-             (!filterType || record.issueType === filterType) &&
-             (!filterPriority || record.priority === filterPriority) &&
-             (!filterStatus || record.status === filterStatus);
+      return (!filterRoom || record.roomNumber.toString().toLowerCase().includes(filterRoom) || record.commonArea && record.commonArea.toLowerCase().includes(filterRoom)) && (!filterType || record.issueType === filterType) && (!filterPriority || record.priority === filterPriority) && (!filterStatus || record.status === filterStatus);
     });
-
     doc.setFont("helvetica", "bold");
     doc.setFontSize(16);
     doc.text(translations[currentLanguage].exportTitle, 14, 15);
-
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text(
-      `${translations[currentLanguage].generatedOn}: ${new Date().toLocaleString()}`,
-      14, 
-      25
-    );
-
-    const tableColumn = [
-      translations[currentLanguage].room,
-      translations[currentLanguage].type,
-      translations[currentLanguage].description,
-      translations[currentLanguage].priority,
-      translations[currentLanguage].scheduledDate,
-      translations[currentLanguage].workDate,
-      translations[currentLanguage].status
-    ];
-
-    const tableRows = filteredRecords.map(record => [
-      record.commonArea ? record.commonArea : `${translations[currentLanguage].room} ${record.roomNumber}`,
-      record.issueType,
-      record.description,
-      record.priority,
-      new Date(record.scheduledDate).toLocaleString(),
-      record.workDate ? new Date(record.workDate).toLocaleString() : translations[currentLanguage].pending,
-      record.status === 'Pending' ? translations[currentLanguage].pending : translations[currentLanguage].completed
-    ]);
-
+    doc.text(`${translations[currentLanguage].generatedOn}: ${new Date().toLocaleString()}`, 14, 25);
+    const tableColumn = [translations[currentLanguage].room, translations[currentLanguage].type, translations[currentLanguage].description, translations[currentLanguage].priority, translations[currentLanguage].scheduledDate, translations[currentLanguage].workDate, translations[currentLanguage].status];
+    const tableRows = filteredRecords.map(record => [record.commonArea ? record.commonArea : `${translations[currentLanguage].room} ${record.roomNumber}`, record.issueType, record.description, record.priority, new Date(record.scheduledDate).toLocaleString(), record.workDate ? new Date(record.workDate).toLocaleString() : translations[currentLanguage].pending, record.status === 'Pending' ? translations[currentLanguage].pending : translations[currentLanguage].completed]);
     doc.autoTable({
       startY: 30,
       head: [tableColumn],
       body: tableRows,
-      headStyles: { 
+      headStyles: {
         fillColor: [26, 26, 46],
         textColor: [233, 236, 239]
       },
@@ -868,19 +746,15 @@ window.exportToPDF = async function() {
       },
       theme: 'grid'
     });
-
-    // Generate filename with format mmddyyyy_report_maintenance
     const now = new Date();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const year = now.getFullYear();
     const filename = `${month}${day}${year}_report_maintenance.pdf`;
-
     doc.save(filename);
   } catch (error) {
     console.error('Error exporting to PDF:', error);
   }
-}
-</script>
+};</script>
 
 </body></html>
